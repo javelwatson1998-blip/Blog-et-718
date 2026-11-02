@@ -1,0 +1,8 @@
+<%= form_with model: article, class: "editor-form" do |form| %>
+  <% if article.errors.any? %>
+    <div class="form-errors"><strong><%= pluralize(article.errors.count, "error") %> prevented saving:</strong><ul><% article.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul></div>
+  <% end %>
+  <div class="field"><%= form.label :title, "Article title" %><%= form.text_field :title, placeholder: "Give your article a great title", required: true %></div>
+  <div class="field"><%= form.label :body, "Your story" %><%= form.text_area :body, rows: 12, placeholder: "Start writing your story...", required: true %></div>
+  <div class="form-actions"><%= form.submit "Publish article", class: "button button-primary" %><%= link_to "Cancel", articles_path, class: "button button-outline" %></div>
+<% end %>

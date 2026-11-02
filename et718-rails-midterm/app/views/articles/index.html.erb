@@ -1,0 +1,23 @@
+<section class="hero">
+  <span class="eyebrow">ET-718 · FULL STACK DEVELOPMENT</span>
+  <h1>Ideas worth<br><em>sharing.</em></h1>
+  <p>A simple space to publish stories, explore thoughts, and join the conversation.</p>
+  <%= link_to "Create a new post →", new_article_path, class: "button button-primary" %>
+</section>
+<section class="section-heading">
+  <div><span class="eyebrow">THE JOURNAL</span><h2>Latest articles</h2></div>
+  <span class="count"><%= pluralize(@articles.count, "post") %></span>
+</section>
+<div class="article-grid">
+  <% @articles.each do |article| %>
+    <article class="post-card">
+      <p class="post-date"><%= article.created_at.strftime("%B %d, %Y") %></p>
+      <h3><%= link_to article.title, article_path(article) %></h3>
+      <p><%= truncate(article.body, length: 150) %></p>
+      <div class="post-card-bottom"><%= link_to "Read article ↗", article_path(article) %><span><%= pluralize(article.comments.count, "comment") %></span></div>
+    </article>
+  <% end %>
+</div>
+<% if @articles.empty? %>
+  <div class="empty-state"><h3>No articles yet</h3><p>Start by writing your first article.</p><%= link_to "Write the first post", new_article_path, class: "button button-primary" %></div>
+<% end %>

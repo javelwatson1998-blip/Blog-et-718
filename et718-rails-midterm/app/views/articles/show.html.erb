@@ -1,0 +1,15 @@
+<article class="article-detail">
+  <%= link_to "← Back to articles", articles_path, class: "back-link" %>
+  <span class="eyebrow">THE JOURNAL · <%= @article.created_at.strftime("%B %d, %Y") %></span>
+  <h1><%= @article.title %></h1>
+  <div class="article-body"><%= simple_format(@article.body) %></div>
+  <div class="article-actions"><%= link_to "Edit article", edit_article_path(@article), class: "button button-outline" %><%= button_to "Delete article", article_path(@article), method: :delete, class: "button button-danger", form: { data: { turbo_confirm: "Delete this article and all of its comments?" } } %></div>
+</article>
+<section id="comments" class="comments-section">
+  <div class="section-heading"><div><span class="eyebrow">DISCUSSION</span><h2>Comments</h2></div><span class="count"><%= @article.comments.count %></span></div>
+  <% @article.comments.order(created_at: :desc).each do |comment| %>
+    <div class="comment"><div class="comment-header"><strong><%= comment.commenter %></strong><span><%= comment.created_at.strftime("%b %d, %Y") %></span></div><p><%= comment.body %></p><%= button_to "Remove", article_comment_path(@article, comment), method: :delete, class: "link-danger", form: { data: { turbo_confirm: "Delete this comment?" } } %></div>
+  <% end %>
+  <% if @article.comments.empty? %><p class="muted">No comments yet. Join the conversation.</p><% end %>
+  <div class="comment-form"><h3>Leave a comment</h3><%= form_with model: [@article, @article.comments.build] do |form| %><div class="field"><%= form.label :commenter, "Your name" %><%= form.text_field :commenter, required: true, placeholder: "Name" %></div><div class="field"><%= form.label :body, "Your comment" %><%= form.text_area :body, required: true, rows: 4, placeholder: "Share your thoughts..." %></div><%= form.submit "Post comment", class: "button button-primary" %><% end %></div>
+</section>

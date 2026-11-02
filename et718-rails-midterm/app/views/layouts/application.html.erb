@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Blog | ET-718 Midterm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <%= link_to "THE BLOG.", root_path, class: "brand" %>
+        <nav aria-label="Main navigation">
+          <%= link_to "All posts", articles_path %>
+          <%= link_to "Write a post", new_article_path, class: "nav-button" %>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+      <% if notice %><p class="flash notice"><%= notice %></p><% end %>
+      <% if alert %><p class="flash alert"><%= alert %></p><% end %>
+      <%= yield %>
+    </main>
+    <footer class="container footer">ET-718 / ET-713 · Ruby on Rails Blog Midterm</footer>
+  </body>
+</html>
